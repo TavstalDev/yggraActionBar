@@ -38,16 +38,16 @@ public class YggraActionBar implements IActionBar {
      *               for platform services (currently the 1.13 implementation)
      */
     public YggraActionBar(JavaPlugin plugin)  {
-        String implClassName = getImplClassName();
         try {
-            if (VersionUtils.getServerVersion().startsWith("1.13"))
+            String implClassName = getImplClassName();
+            if (VersionUtils.isAtLeast(1, 13) && !VersionUtils.isAtLeast(1, 16, 5))
                 _bar = (IActionBar) Class.forName(implClassName)
                         .getDeclaredConstructor(JavaPlugin.class).newInstance(plugin);
             else
                 _bar = (IActionBar) Class.forName(implClassName)
                         .getDeclaredConstructor().newInstance();
         }
-        catch (Exception ex) {
+        catch (Exception | LinkageError ex) {
             ex.printStackTrace();
         }
     }
