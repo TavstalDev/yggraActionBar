@@ -40,18 +40,25 @@ jobs:
       - name: Build plugin
         run: ./gradlew build
 
-      - name: Extract plugin version from plugin.yml
+      - name: Extract version from JAR file name
         id: extract_version
         run: |
-          # Use a safer python one-liner or robust parser instead of grep/cut shell parsing
-          version=$(python3 -c "
-          import yaml
-          with open('src/main/resources/plugin.yml') as f:
-              data = yaml.safe_load(f)
-              print(data.get('version', ''))
-          ")
-          echo "version=$version" >> $GITHUB_OUTPUT
-          echo "Extracted version: $version"
+            # Locate the built JAR file inside bootstrap/build/libs/
+            jar_file=$(find bootstrap/build/libs -name "*.jar" ! -name "*-sources.jar" ! -name "*-javadoc.jar" ! -name "*-all.jar" ! -name "*-shaded.jar" | head -n 1)
+            
+            if [ -z "$jar_file" ]; then
+              echo "Error: No JAR file found in bootstrap/build/libs!"
+              exit 1
+            fi
+            
+            # Get filename without path and without extension (.jar)
+            filename=$(basename "$jar_file" .jar)
+            
+            # Extract version (assumes format like plugin-name-1.0.0.jar -> grabs 1.0.0)
+            version="${filename##*-}"
+            
+            echo "version=$version" >> $GITHUB_OUTPUT
+            echo "Extracted version: $version from $(basename "$jar_file")"
 
       - name: Upload JAR artifact
         uses: actions/upload-artifact@v7
