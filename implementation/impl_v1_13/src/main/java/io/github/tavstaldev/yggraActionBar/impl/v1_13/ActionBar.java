@@ -18,8 +18,8 @@ import java.util.Set;
  * {@link IActionBar} implementation for Minecraft 1.13 - 1.16.4 servers.
  *
  * <p>Delegates to Adventure's Bukkit platform, which handles the version-specific
- * packet format for the action bar. Messages are deserialised from legacy section
- * codes before being handed to Adventure.</p>
+ * packet format for the action bar. Strings are parsed with
+ * {@link AdventureUtils#parse(String)} before being handed to Adventure.</p>
  */
 public class ActionBar implements IActionBar {
     private final BukkitAudiences adventure;
