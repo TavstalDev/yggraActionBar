@@ -23,7 +23,7 @@ jobs:
           fetch-depth: 0 # Fetch all history for proper tag/changelog handling
 
       - name: Set up Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           distribution: 'temurin'
           java-version: 25
