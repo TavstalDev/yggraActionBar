@@ -1,0 +1,8 @@
+main: io.github.tavstaldev.yggraActionBar.test.TestPlugin
+version: '1.0.0'
+api-version: '1.8'
+
+name: Test
+prefix: Test
+authors: [ Tavstal ]
+website: https://tavstaldev.github.io/
