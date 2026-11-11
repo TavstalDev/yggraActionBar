@@ -26,7 +26,6 @@ import java.util.Map;
  *     <li>1.8 - 1.11.2: NMS {@code PacketPlayOutChat} with chat type {@code 2}</li>
  * </ul>
  */
-@SuppressWarnings("CallToPrintStackTrace")
 public class YggraActionBar implements IActionBar {
 
     private IActionBar _bar;
@@ -48,7 +47,7 @@ public class YggraActionBar implements IActionBar {
                         .getDeclaredConstructor().newInstance();
         }
         catch (Exception | LinkageError ex) {
-            ex.printStackTrace();
+            plugin.getLogger().warning("Failed to get the right IActionBar implementation for this server version.\n" + ex);
         }
     }
 
