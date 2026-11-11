@@ -1,7 +1,9 @@
 package io.github.tavstaldev.yggraActionBar.impl.v1_16_5;
 
 import io.github.tavstaldev.yggraActionBar.api.IActionBar;
+import io.github.tavstaldev.yggraActionBar.api.utils.AdventureUtils;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 import org.intellij.lang.annotations.RegExp;
@@ -11,6 +13,12 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * {@link IActionBar} implementation for Minecraft 1.16.5 and newer servers.
+ *
+ * <p>Uses the native {@link Player#sendActionBar(Component)} API, which removes the
+ * need for reflection or an additional platform library.</p>
+ */
 public class ActionBar implements IActionBar {
 
     /**
@@ -47,8 +55,7 @@ public class ActionBar implements IActionBar {
             msg = msg.replace(finalKey, parameters.get(dirKey).toString());
         }
 
-        msg = msg.replace('§', '&');
-        Component component = LegacyComponentSerializer.legacySection().deserialize(msg);
+        Component component = AdventureUtils.parse(msg);
         send(player, component);
     }
 }
