@@ -102,8 +102,22 @@ jobs:
           toTag: ${{ github.sha }}
           configurationJson: |
             {
-              "template": "#{{UNCATEGORIZED}}",
-              "commit_template": "- #{{TITLE}} (`#{{MERGE_SHA}}`) by @#{{AUTHOR}}"
+              "template": "#{{CHANGELOG}}",
+              "commit_template": "- #{{TITLE}}",
+              "categories": [
+                { "title": "## Features", "rules": [{ "pattern": "^feat(\\(.+\\))?!?:.*", "on_property": "title" }] },
+                { "title": "## Bug Fixes", "rules": [{ "pattern": "^fix(\\(.+\\))?!?:.*", "on_property": "title" }] },
+                { "title": "## Performance", "rules": [{ "pattern": "^perf(\\(.+\\))?!?:.*", "on_property": "title" }] },
+                { "title": "## Refactoring", "rules": [{ "pattern": "^refactor(\\(.+\\))?!?:.*", "on_property": "title" }] },
+                { "title": "## Documentation", "rules": [{ "pattern": "^docs(\\(.+\\))?!?:.*", "on_property": "title" }] },
+                { "title": "## Style", "rules": [{ "pattern": "^style(\\(.+\\))?!?:.*", "on_property": "title" }] },
+                { "title": "## Tests", "rules": [{ "pattern": "^test(\\(.+\\))?!?:.*", "on_property": "title" }] },
+                { "title": "## Build System", "rules": [{ "pattern": "^build(\\(.+\\))?!?:.*", "on_property": "title" }] },
+                { "title": "## CI", "rules": [{ "pattern": "^ci(\\(.+\\))?!?:.*", "on_property": "title" }] },
+                { "title": "## Chores", "rules": [{ "pattern": "^chore(\\(.+\\))?!?:.*", "on_property": "title" }] },
+                { "title": "## Reverts", "rules": [{ "pattern": "^revert(\\(.+\\))?!?:.*", "on_property": "title" }] },
+                { "title": "## Other", "rules": [{ "pattern": ".*", "on_property": "title" }] }
+              ]
             }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
