@@ -43,6 +43,7 @@ tasks.compileJava {
 // Configure the Shadow JAR task
 tasks.shadowJar {
     dependsOn(":bootstrap:shadowJar")
+    archiveBaseName.set("yggraActionBar-test")
     archiveClassifier.set("") // Set the classifier for the JAR
     manifest {
         attributes["paperweight-mappings-namespace"] = "spigot" // Add custom manifest attributes
