@@ -1,0 +1,92 @@
+# Purpose: This GitHub Actions workflow builds the Paper plugin and creates a pre-release on the stable branch securely.
+name: Build and Pre-release Paper Plugin
+
+on:
+  push:
+    branches:
+      - stable
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build Plugin
+    runs-on: ubuntu-latest
+    outputs:
+      plugin_version: ${{ steps.extract_version.outputs.version }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetch all history for proper tag/changelog handling
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 25
+
+      - name: Grant Gradle wrapper permission
+        run: chmod +x ./gradlew
+
+      - name: Build plugin
+        run: ./gradlew build
+
+      - name: Extract plugin version from plugin.yml
+        id: extract_version
+        run: |
+          # Use a safer python one-liner or robust parser instead of grep/cut shell parsing
+          version=$(python3 -c "
+          import yaml
+          with open('src/main/resources/plugin.yml') as f:
+              data = yaml.safe_load(f)
+              print(data.get('version', ''))
+          ")
+          echo "version=$version" >> $GITHUB_OUTPUT
+          echo "Extracted version: $version"
+
+      - name: Upload JAR artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: plugin-jar
+          path: bootstrap/build/libs/*.jar
+
+  release:
+    name: Create GitHub Pre-release
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository (for changelog generation)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download built JAR
+        uses: actions/download-artifact@v4
+        with:
+          name: plugin-jar
+
+      - name: Generate Changelog safely
+        id: changelog
+        uses: mikepenz/release-changelog-builder-action@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create GitHub Pre-release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ needs.build.outputs.plugin_version }}
+          name: "Pre-release v${{ needs.build.outputs.plugin_version }}"
+          prerelease: true
+          body: |
+            ## 📜 Changelog
+            Changes pushed to `${{ github.ref_name }}`
+
+            ${{ steps.changelog.outputs.changelog }}
+          files: |
+            *.jar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
