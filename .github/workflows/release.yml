@@ -97,8 +97,14 @@ jobs:
         uses: mikepenz/release-changelog-builder-action@v6
         continue-on-error: true
         with:
+          mode: COMMIT
           fromTag: ${{ steps.range.outputs.from }}
           toTag: ${{ github.sha }}
+          configurationJson: |
+            {
+              "template": "#{{UNCATEGORIZED}}",
+              "commit_template": "- #{{TITLE}} (`#{{MERGE_SHA}}`) by @#{{AUTHOR}}"
+            }
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
