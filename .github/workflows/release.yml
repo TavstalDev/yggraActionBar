@@ -117,6 +117,10 @@ jobs:
                 { "title": "## Chores", "rules": [{ "pattern": "^chore(\\(.+\\))?!?:.*", "on_property": "title" }] },
                 { "title": "## Reverts", "rules": [{ "pattern": "^revert(\\(.+\\))?!?:.*", "on_property": "title" }] },
                 { "title": "## Merges", "rules": [{ "pattern": "^Merge(\\(.+\\))?!?:.*", "on_property": "title" }] }
+              ],
+              "label_extractor": [],
+              "transformers": [
+                { "pattern": "^[a-z]+(\\(.+\\))?!?:\\s*(.*)", "target": "$2" }
               ]
             }
         env:
