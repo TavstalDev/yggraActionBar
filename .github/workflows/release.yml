@@ -85,6 +85,8 @@ jobs:
       - name: Generate Changelog safely
         id: changelog
         uses: mikepenz/release-changelog-builder-action@v6
+        with:
+          fromTag: ${{ steps.get_previous_tag.outputs.tag || '' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
