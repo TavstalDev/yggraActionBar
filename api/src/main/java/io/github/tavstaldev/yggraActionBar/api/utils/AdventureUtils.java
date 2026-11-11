@@ -6,6 +6,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
@@ -20,6 +21,7 @@ import java.util.regex.Pattern;
  * format, and translation of color-coded strings into Adventure {@link Component} objects.
  */
 @SuppressWarnings("unused")
+@ApiStatus.Internal
 public final class AdventureUtils {
 
     public static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();

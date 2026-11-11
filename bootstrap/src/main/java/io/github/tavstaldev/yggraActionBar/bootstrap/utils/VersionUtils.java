@@ -1,6 +1,7 @@
 package io.github.tavstaldev.yggraActionBar.bootstrap.utils;
 
 import org.bukkit.Bukkit;
+import org.jetbrains.annotations.ApiStatus;
 
 import java.lang.reflect.Method;
 
@@ -10,6 +11,7 @@ import java.lang.reflect.Method;
  * <p>The detected server version is cached after the first lookup, so repeated calls
  * to {@link #getServerVersion()} are cheap and consistent.</p>
  */
+@ApiStatus.Internal
 public class VersionUtils {
     private static String _version = null;
 
