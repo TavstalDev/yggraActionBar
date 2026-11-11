@@ -82,11 +82,23 @@ jobs:
         with:
           name: plugin-jar
 
+      - name: Determine changelog range
+        id: range
+        run: |
+            PREV_TAG=$(git describe --tags --abbrev=0 2>/dev/null || true)
+            if [ -z "$PREV_TAG" ]; then
+            # No tags yet: start from the first commit
+            PREV_TAG=$(git rev-list --max-parents=0 HEAD | tail -n 1)
+            fi
+            echo "from=$PREV_TAG" >> "$GITHUB_OUTPUT"
+
       - name: Generate Changelog safely
         id: changelog
         uses: mikepenz/release-changelog-builder-action@v6
+        continue-on-error: true
         with:
-          fromTag: ${{ steps.get_previous_tag.outputs.tag || '' }}
+          fromTag: ${{ steps.range.outputs.from }}
+          toTag: ${{ github.sha }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -100,7 +112,7 @@ jobs:
             ## 📜 Changelog
             Changes pushed to `${{ github.ref_name }}`
 
-            ${{ steps.changelog.outputs.changelog }}
+             ${{ steps.changelog.outputs.changelog || 'Initial release.' }}
           files: |
             *.jar
         env:
