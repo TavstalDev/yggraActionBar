@@ -6,6 +6,9 @@ import java.lang.reflect.Method;
 
 /**
  * Utility class for handling server version-related operations.
+ *
+ * <p>The detected server version is cached after the first lookup, so repeated calls
+ * to {@link #getServerVersion()} are cheap and consistent.</p>
  */
 public class VersionUtils {
     private static String _version = null;

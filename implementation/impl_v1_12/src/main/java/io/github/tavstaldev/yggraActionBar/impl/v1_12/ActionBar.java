@@ -17,6 +17,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * {@link IActionBar} implementation for Minecraft 1.12.x servers.
+ *
+ * <p>This implementation uses reflection to construct a version-specific NMS
+ * {@code PacketPlayOutChat} packet with the {@code ChatMessageType.GAME_INFO} chat
+ * type and sends it directly through the player's connection. This is required
+ * because the Bukkit API does not expose action bar support before 1.16.</p>
+ *
+ * <p>Messages are parsed with MiniMessage first and then serialised to legacy
+ * section codes so the result can be wrapped in an NMS chat component.</p>
+ */
 @SuppressWarnings("CallToPrintStackTrace")
 public class ActionBar implements IActionBar {
     private static final String VERSION =
@@ -52,6 +63,13 @@ public class ActionBar implements IActionBar {
         }
     }
 
+    /**
+     * Resolves an NMS class for the detected server version.
+     *
+     * @param name the simple NMS class name, for example {@code EntityPlayer}
+     * @return the resolved class
+     * @throws ClassNotFoundException if the class does not exist for this server version
+     */
     private static Class<?> nms(String name) throws ClassNotFoundException {
         return Class.forName("net.minecraft.server." + VERSION + "." + name);
     }
