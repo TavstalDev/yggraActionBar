@@ -51,7 +51,7 @@ tasks.shadowJar {
 
     exclude("org/slf4j/**")
 
-    val s = "io.github.tavstaldev.yggraActionBar.test.shadow"
+    val s = "com.github.TavstalDev.yggraActionBar.test.shadow"
     relocate("net.byteflux", "$s.libby")
 }
 

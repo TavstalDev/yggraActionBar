@@ -1,21 +1,12 @@
-plugins {
-    id("java")
-}
+plugins {}
 
 allprojects {
-    group = "io.github.tavstaldev.yggraActionBar"
-    version = "0.1.0"
+    group = "com.github.TavstalDev"
+    version = "0.1.1"
 }
 
 val jetbrainsAnnotationsVersion = project.property("jetbrainsAnnotationsVersion") as String
 val lombokVersion = project.property("lombokVersion") as String
-java {
-    toolchain {
-        languageVersion = JavaLanguageVersion.of(25)
-        sourceCompatibility = JavaVersion.toVersion(25)
-        targetCompatibility = JavaVersion.toVersion(25)
-    }
-}
 
 subprojects {
     apply(plugin = "java")
@@ -28,10 +19,16 @@ subprojects {
         maven("https://repo.alessiodp.com/releases")
     }
 
+    extensions.configure<JavaPluginExtension> {
+        toolchain {
+            languageVersion.set(JavaLanguageVersion.of(25))
+        }
+    }
+
     dependencies {
-        compileOnly("org.jetbrains:annotations:${jetbrainsAnnotationsVersion}")
-        compileOnly("org.projectlombok:lombok:${lombokVersion}")
-        annotationProcessor("org.projectlombok:lombok:${lombokVersion}")
+        "compileOnly"("org.jetbrains:annotations:$jetbrainsAnnotationsVersion")
+        "compileOnly"("org.projectlombok:lombok:$lombokVersion")
+        "annotationProcessor"("org.projectlombok:lombok:$lombokVersion")
     }
 
     configurations.configureEach {
