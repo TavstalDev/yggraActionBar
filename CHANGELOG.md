@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] - 2026-11-17
+
+### Added
+
+- JitPack distribution support, including Maven publication of the shaded bootstrap JAR and a
+  `jitpack.yml` build configuration, so the library can be consumed directly from a GitHub tag.
+
+### Changed
+
+- Renamed all Java packages from `io.github.tavstaldev.yggraActionBar` to
+  `com.github.TavstalDev.yggraActionBar` to match the published Maven coordinates.
+- Renamed the test plugin to `YggraActionBarTest` and its JAR base name to `yggraActionBar-test`
+  for consistency.
+- Moved the Java 25 toolchain configuration from the root project to `subprojects`.
+
 ## [0.1.0] - 2026-11-11
 
 Initial public release.
@@ -33,5 +48,6 @@ Initial public release.
 - GitHub Actions workflows for releases and label synchronization, plus Dependabot configuration.
 - MIT license.
 
-[Unreleased]: https://github.com/TavstalDev/yggraActionBar/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/TavstalDev/yggraActionBar/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/TavstalDev/yggraActionBar/releases/tag/v0.1.1
 [0.1.0]: https://github.com/TavstalDev/yggraActionBar/releases/tag/v0.1.0
