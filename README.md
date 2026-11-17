@@ -55,6 +55,8 @@ plugin.
 
 ## Building from source
 
+You only need this when you want to build the library yourself. To consume a released version, use itPack instead.
+
 ```bash
 ./gradlew build
 ```
@@ -79,6 +81,63 @@ The result is `plugin-test/build/libs/plugin-test-1.0.0.jar`.
 ## Usage
 
 ### 1. Add the library to your plugin
+
+#### From JitPack (recommended)
+
+JitPack builds the library from this repository, so there is no need to clone or build it locally.
+Add the JitPack repository.
+
+Gradle (Kotlin DSL):
+
+```kotlin
+repositories {
+    mavenCentral()
+    maven("https://jitpack.io")
+}
+
+dependencies {
+    implementation("com.github.TavstalDev:yggraActionBar:<version>")
+}
+```
+
+Gradle (Groovy DSL):
+
+```groovy
+repositories {
+    mavenCentral()
+    maven { url 'https://jitpack.io' }
+}
+
+dependencies {
+    implementation 'com.github.TavstalDev:yggraActionBar:<version>'
+}
+```
+
+Maven:
+
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+
+<dependencies>
+    <dependency>
+        <groupId>com.github.TavstalDev</groupId>
+        <artifactId>yggraActionBar</artifactId>
+        <version>replace-with-version</version>
+    </dependency>
+</dependencies>
+```
+
+Use a GitHub release tag as the version (`v0.1.0` above). JitPack also accepts a short commit hash
+or `<branch>-SNAPSHOT` (for example `stable-SNAPSHOT`) for unreleased changes. The first time a
+version is requested JitPack builds it on demand, so the initial resolution may take a few minutes.
+Shade the resolved JAR into your plugin as you would with any other dependency.
+
+#### From a local build
 
 Shade the produced library JAR into your plugin. If you build this repository as part of your
 project, you can depend on the shadow configuration directly:
@@ -134,8 +193,8 @@ tasks.shadowJar {
 Then load the Adventure modules during `onEnable`, before creating `YggraActionBar`:
 
 ```java
-import io.github.tavstaldev.yggraActionBar.api.IActionBar;
-import io.github.tavstaldev.yggraActionBar.bootstrap.YggraActionBar;
+import com.github.TavstalDev.yggraActionBar.api.IActionBar;
+import com.github.TavstalDev.yggraActionBar.bootstrap.YggraActionBar;
 import net.byteflux.libby.BukkitLibraryManager;
 import net.byteflux.libby.Library;
 import org.bukkit.plugin.java.JavaPlugin;
