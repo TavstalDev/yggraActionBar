@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] - 2026-11-23
+
+### Added
+
+- Sources and Javadoc JARs to the API module and the published Maven artifact, so the shaded
+  distribution ships with API sources and generated documentation.
+
+### Changed
+
+- Bumped the Gradle wrapper to 9.8.2.
+- Configured Dependabot to ignore Spigot/Paper API and Gradle/Shadow plugin dependencies.
+
 ## [0.1.1] - 2026-11-17
 
 ### Added
@@ -48,6 +60,7 @@ Initial public release.
 - GitHub Actions workflows for releases and label synchronization, plus Dependabot configuration.
 - MIT license.
 
-[Unreleased]: https://github.com/TavstalDev/yggraActionBar/compare/v0.1.1...HEAD
+[Unreleased]: https://github.com/TavstalDev/yggraActionBar/compare/v0.1.2...HEAD
+[0.1.2]: https://github.com/TavstalDev/yggraActionBar/releases/tag/v0.1.2
 [0.1.1]: https://github.com/TavstalDev/yggraActionBar/releases/tag/v0.1.1
 [0.1.0]: https://github.com/TavstalDev/yggraActionBar/releases/tag/v0.1.0
